@@ -1,0 +1,499 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandeep K Nayak — Obsidian Edition ID</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --accent-gold: #dcae5b;
+            --accent-glow: rgba(220, 174, 91, 0.15);
+            --dark-base: #0a0d10;
+            --light-base: #f7f9fb;
+            --border-alpha: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background: #06080a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            overflow: hidden;
+            perspective: 2000px;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: rotateX(60deg) translateZ(-200px);
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .scene-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .instruction-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+            animation: beacon 1.8s infinite ease-in-out;
+        }
+
+        .card-perspective-wrapper {
+            width: 340px;
+            height: 540px;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: pointer;
+        }
+
+        .card-perspective-wrapper.is-flipped {
+            transform: rotateY(180deg) !important;
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7);
+            overflow: hidden;
+        }
+
+        .glare-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 80%);
+            pointer-events: none;
+            z-index: 5;
+            mix-blend-mode: overlay;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .card-perspective-wrapper:hover .glare-overlay {
+            opacity: 1;
+        }
+
+        .smart-chip {
+            width: 48px;
+            height: 36px;
+            background: linear-gradient(135deg, #1f242e 0%, #0d1013 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            margin-bottom: 24px;
+            position: relative;
+            box-shadow: inset 0 1px 3px rgba(255,255,255,0.05);
+        }
+        .smart-chip::after {
+            content: '';
+            position: absolute;
+            top: 15%; left: 15%; width: 70%; height: 70%;
+            border: 1px solid rgba(220, 174, 91, 0.2);
+            border-radius: 3px;
+        }
+
+        .card-front {
+            background: linear-gradient(160deg, #13171c 0%, #080a0d 100%);
+            color: var(--light-base);
+        }
+
+        .watermark-matrix {
+            position: absolute;
+            right: -30px;
+            bottom: -10px;
+            font-family: 'Syne', sans-serif;
+            font-size: 290px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.015);
+            line-height: 0.7;
+            pointer-events: none;
+        }
+
+        .front-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            padding-bottom: 14px;
+        }
+
+        .core-spec h4 {
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+
+        .core-spec p {
+            font-family: 'Space Mono', monospace;
+            font-size: 8px;
+            color: rgba(255,255,255,0.4);
+            margin-top: 3px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .terminal-pill {
+            background: rgba(220, 174, 91, 0.08);
+            border: 1px solid rgba(220, 174, 91, 0.3);
+            color: var(--accent-gold);
+            font-family: 'Space Mono', monospace;
+            font-size: 8px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 1.5px;
+        }
+
+        .portrait-viewport {
+            width: 100%;
+            height: 270px;
+            margin-top: 24px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            background: #101419;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .portrait-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 20%;
+            filter: grayscale(100%) contrast(110%) brightness(95%);
+            mix-blend-mode: luminosity;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .card-perspective-wrapper:hover .portrait-img {
+            filter: grayscale(40%) contrast(100%) brightness(100%);
+            scale: 1.03;
+        }
+
+        .portrait-viewport::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            animation: scan 4s infinite linear;
+            opacity: 0.4;
+        }
+
+        .front-footer {
+            margin-top: auto;
+        }
+
+        .mono-quote {
+            font-family: 'Space Mono', monospace;
+            color: rgba(255,255,255,0.3);
+            font-size: 10px;
+            margin-bottom: 4px;
+        }
+
+        .headline-heavy {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+        .headline-heavy span {
+            color: var(--accent-gold);
+            text-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .card-back {
+            background: #0b0e11;
+            color: #e2e8f0;
+            transform: rotateY(180deg);
+            font-family: 'Space Mono', monospace; 
+        }
+
+        .back-system-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .sys-logo {
+            font-size: 13px;
+            letter-spacing: 1px;
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        .sec-clearance {
+            font-size: 8px;
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 16px;
+            margin-bottom: 28px;
+        }
+
+        .grid-node .meta-label {
+            display: block;
+            font-size: 8px;
+            color: rgba(255,255,255,0.25);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .grid-node .meta-value {
+            font-size: 10px;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+
+        .interstitial-rule {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(220,174,91,0.2), rgba(255,255,255,0.02) 80%);
+            margin-bottom: 24px;
+        }
+
+        .identity-cluster .alias {
+            font-size: 10px;
+            color: var(--accent-gold);
+            letter-spacing: 0.5px;
+        }
+
+        .identity-cluster h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+            margin-top: 2px;
+            letter-spacing: -0.5px;
+        }
+
+        .back-footer-matrix {
+            margin-top: auto;
+            display: flex;
+            align-items: flex-end;
+            gap: 20px;
+        }
+
+        .qr-containment {
+            background: #fff;
+            padding: 8px;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            flex-shrink: 0;
+        }
+
+        .qr-containment img {
+            width: 72px;
+            height: 72px;
+            display: block;
+            mix-blend-mode: multiply;
+        }
+
+        .telemetry-block {
+            flex-grow: 1;
+        }
+
+        .telemetry-block p {
+            font-size: 8px;
+            color: rgba(255,255,255,0.3);
+            line-height: 1.5;
+        }
+
+        .architecture-sig {
+            font-size: 8px;
+            color: rgba(255,255,255,0.15);
+            margin-top: 8px;
+            border-top: 1px solid rgba(255,255,255,0.03);
+            padding-top: 6px;
+        }
+
+        @keyframes beacon {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.15); box-shadow: 0 0 12px #10b981; }
+        }
+
+        @keyframes scan {
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scene-container">
+        <div class="instruction-bar">
+            <div class="pulse-dot"></div>
+            <span>Interact To Scan // Flip Token</span>
+        </div>
+        
+        <div class="card-perspective-wrapper" id="primeToken">
+            
+            <!-- FRONT FACE -->
+            <div class="card-face card-front">
+                <div class="glare-overlay" id="glareFront"></div>
+                <div class="watermark-matrix">DS</div>
+                <div class="smart-chip"></div>
+                <div class="front-header">
+                    <div class="core-spec">
+                        <h4>INF. SCIENCE / DEV</h4>
+                        <p>Matrix Core Node</p>
+                    </div>
+                    <div class="terminal-pill">SYS.ENG // 2026</div>
+                </div>
+                <div class="portrait-viewport">
+                    <img src="profile.jpeg" alt="Sandeep K Nayak" class="portrait-img">
+                </div>
+                <div class="front-footer">
+                    <p class="mono-quote">// Executing: "Make it happen."</p>
+                    <h2 class="headline-heavy">Designing the future,<br><span>one pixel at a time.</span></h2>
+                </div>
+            </div>
+            
+            <!-- BACK FACE -->
+            <div class="card-face card-back">
+                <div class="glare-overlay" id="glareBack"></div>
+                <div class="smart-chip"></div>
+                <div class="back-system-header">
+                    <div class="sys-logo">◈ SYSTEM_NEXUS ◈</div>
+                    <div class="sec-clearance">CLEARANCE: LEVEL A</div>
+                </div>
+                <div class="data-grid">
+                    <div class="grid-node">
+                        <span class="meta-label">Client GeoIP</span>
+                        <div class="meta-value" id="telemetryCoordinates">12.9716° N<br>77.5946° E</div>
+                    </div>
+                    <div class="grid-node">
+                        <span class="meta-label">Network Link</span>
+                        <div class="meta-value">HUB_ROUTER<br>MULTIPORT</div>
+                    </div>
+                </div>
+                <hr class="interstitial-rule">
+                <div class="identity-cluster">
+                    <span class="alias">@sandykn78-create</span>
+                    <h2>SANDEEP K NAYAK</h2>
+                </div>
+                <div class="back-footer-matrix">
+                    <div class="qr-containment">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + $targetHubUrl + '" alt="Secure Profile Routing Key Matrix">
+                    </div>
+                    <div class="system-meta telemetry-block">
+                        <span class="meta-label" style="margin-bottom: 2px;">Identity Token</span>
+                        <p style="color:#fff; font-weight: bold;">MULTILINK_NODE</p>
+                        <div class="architecture-sig">■ Cryptographic Identity Component</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        var cardWrapper = document.getElementById('primeToken');
+        var glareFront = document.getElementById('glareFront');
+        var glareBack = document.getElementById('glareBack');
+
+        cardWrapper.addEventListener('click', function() {
+            cardWrapper.classList.toggle('is-flipped');
+            if(cardWrapper.classList.contains('is-flipped')) {
+                cardWrapper.style.transform = 'rotateY(180deg)';
+            } else {
+                cardWrapper.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            }
+        });
+
+        cardWrapper.parentElement.addEventListener('mousemove', function(e) {
+            if(cardWrapper.classList.contains('is-flipped')) return;
+
+            var trackingBox = cardWrapper.getBoundingClientRect();
+            var mouseX = e.clientX - trackingBox.left - (trackingBox.width / 2);
+            var mouseY = e.clientY - trackingBox.top - (trackingBox.height / 2);
+            
+            var degreeX = -mouseY / 10;
+            var degreeY = mouseX / 10;
+            
+            cardWrapper.style.transform = 'rotateX(' + degreeX + 'deg) rotateY(' + degreeY + 'deg)';
+
+            var glarePercentageX = ((e.clientX - trackingBox.left) / trackingBox.width) * 100;
+            var glarePercentageY = ((e.clientY - trackingBox.top) / trackingBox.height) * 100;
+            
+            glareFront.style.background = 'radial-gradient(circle at ' + glarePercentageX + '% ' + glarePercentageY + '%, rgba(255,255,255,0.15) 0%, transparent 75%)';
+        });
+
+        cardWrapper.parentElement.addEventListener('mouseleave', function() {
+            if(!cardWrapper.classList.contains('is-flipped')) {
+                cardWrapper.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            }
+        });
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat = position.coords.latitude.toFixed(4);
+                var lon = position.coords.longitude.toFixed(4);
+                document.getElementById('telemetryCoordinates').innerHTML = lat + '° N<br>' + lon + '° E';
+            }, function() {});
+        }
+    </script>
+</body>
+</html>
