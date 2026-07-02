@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sandeep K Nayak — Nexus Directory</title>
+    <title>Sandeep K Nayak — Connect Directory</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --neon-cyan: #00f0ff;
-            --neon-magenta: #ff0055;
-            --neon-yellow: #fcee0a;
-            --terminal-dark: #03070d;
-            --panel-bg: rgba(5, 11, 22, 0.85);
-            --cyber-border: rgba(0, 240, 255, 0.25);
+            --accent-gold: #dcae5b;
+            --dark-base: #0a0d10;
+            --light-base: #f7f9fb;
+            --card-bg: #13171c;
+            --border-alpha: rgba(255, 255, 255, 0.05);
         }
 
         * {
@@ -26,220 +25,121 @@
         }
 
         body {
-            background: var(--terminal-dark);
-            color: #fff;
-            font-family: 'Share Tech Mono', monospace;
+            background: #06080a;
+            color: var(--light-base);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 24px;
+            padding: 20px;
             position: relative;
-            overflow-x: hidden;
         }
 
-        /* Animated Scanline Background Grid */
+        /* Ambient grid pattern matching main index page */
         body::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(rgba(255, 0, 85, 0.01) 2px, transparent 2px);
-            background-size: 25px 25px, 25px 25px, 100% 4px;
-            opacity: 0.8;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.4;
             pointer-events: none;
             z-index: 1;
         }
 
-        /* Global Scanline Overlay Effect */
-        body::after {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 99;
-            background-size: 100% 3px, 6px 100%;
-            pointer-events: none;
-        }
-
         .hub-container {
             width: 100%;
-            max-width: 380px;
-            background: var(--panel-bg);
-            border: 2px solid var(--neon-cyan);
-            border-radius: 4px; /* Hard, geometric cyberpunk cuts */
-            padding: 40px 24px;
+            max-width: 360px;
+            background: linear-gradient(160deg, #13171c 0%, #080a0d 100%);
+            border: 1px solid var(--border-alpha);
+            border-radius: 24px;
+            padding: 36px 24px;
             text-align: center;
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.15), inset 0 0 20px rgba(0, 240, 255, 0.1);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
             position: relative;
             z-index: 2;
-            backdrop-filter: blur(8px);
-        }
-
-        /* Tech corner accents */
-        .hub-container::before {
-            content: 'NEXUS_v4.26';
-            position: absolute;
-            top: -12px;
-            left: 20px;
-            background: var(--terminal-dark);
-            padding: 0 8px;
-            font-size: 10px;
-            color: var(--neon-yellow);
-            letter-spacing: 2px;
-            border-left: 2px solid var(--neon-yellow);
         }
 
         .profile-avatar-wrapper {
-            width: 110px;
-            height: 110px;
-            margin: 0 auto 24px;
-            position: relative;
-            background: var(--terminal-dark);
-            border: 1px solid var(--neon-magenta);
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
             padding: 4px;
-        }
-
-        /* Corner bracket accents for the photo frame */
-        .profile-avatar-wrapper::before {
-            content: '';
-            position: absolute;
-            top: -4px; left: -4px; width: 16px; height: 16px;
-            border-top: 3px solid var(--neon-cyan);
-            border-left: 3px solid var(--neon-cyan);
-        }
-        .profile-avatar-wrapper::after {
-            content: '';
-            position: absolute;
-            bottom: -4px; right: -4px; width: 16px; height: 16px;
-            border-bottom: 3px solid var(--neon-cyan);
-            border-right: 3px solid var(--neon-cyan);
+            background: linear-gradient(135deg, var(--accent-gold), transparent);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
 
         .profile-avatar {
             width: 100%;
             height: 100%;
+            border-radius: 50%;
             object-fit: cover;
-            filter: saturate(1.4) contrast(1.1) hue-rotate(-10deg);
-            border: 1px solid rgba(0, 240, 255, 0.3);
+            filter: grayscale(20%);
+            background: #101419;
         }
 
         .identity-block h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
-            font-weight: 900;
-            letter-spacing: 1px;
-            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
             text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            margin-bottom: 4px;
         }
 
         .identity-block p {
-            font-size: 11px;
-            color: var(--neon-cyan);
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            color: var(--accent-gold);
             text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-top: 4px;
-            margin-bottom: 36px;
-            text-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
+            letter-spacing: 2px;
+            margin-bottom: 32px;
         }
 
         .links-vector {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
         }
 
         .hyper-link-node {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 18px 20px;
-            background: rgba(0, 240, 255, 0.02);
-            border: 1px solid var(--cyber-border);
-            color: #c4d1ec;
-            font-size: 13px;
-            font-weight: bold;
+            justify-content: center;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            color: #94a3b8;
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
             text-decoration: none;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            position: relative;
-            transition: all 0.2s ease;
-            overflow: hidden;
-        }
-
-        /* Diagonal geometric corner slice cut */
-        .hyper-link-node::before {
-            content: '';
-            position: absolute;
-            bottom: 0; right: 0;
-            width: 0; height: 0;
-            border-style: solid;
-            border-width: 0 0 8px 8px;
-            border-color: transparent transparent var(--neon-cyan) transparent;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .hyper-link-node:hover {
-            background: rgba(0, 240, 255, 0.1);
-            border-color: var(--neon-cyan);
+            background: rgba(220, 174, 91, 0.06);
+            border-color: rgba(220, 174, 91, 0.4);
             color: #fff;
-            transform: scale(1.02);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-            text-shadow: 0 0 5px #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        /* Custom color accent variants for distinct portals */
-        .hyper-link-node.instagram-node {
-            border-color: rgba(255, 0, 85, 0.3);
-        }
-        .hyper-link-node.instagram-node::before {
-            border-color: transparent transparent var(--neon-magenta) transparent;
-        }
-        .hyper-link-node.instagram-node:hover {
-            background: rgba(255, 0, 85, 0.1);
-            border-color: var(--neon-magenta);
-            box-shadow: 0 0 15px rgba(255, 0, 85, 0.4);
-        }
-
+        /* Specific style for primary back-to-card token option */
         .hyper-link-node.primary-node {
-            background: rgba(252, 238, 10, 0.03);
-            border-color: rgba(252, 238, 10, 0.3);
-            color: var(--neon-yellow);
-            margin-top: 10px;
-        }
-        .hyper-link-node.primary-node::before {
-            border-color: transparent transparent var(--neon-yellow) transparent;
+            background: rgba(220, 174, 91, 0.08);
+            border-color: rgba(220, 174, 91, 0.3);
+            color: var(--accent-gold);
         }
         .hyper-link-node.primary-node:hover {
-            background: var(--neon-yellow);
-            color: #000;
-            box-shadow: 0 0 20px rgba(252, 238, 10, 0.5);
-            text-shadow: none;
-        }
-
-        .status-tag {
-            font-size: 9px;
-            padding: 2px 6px;
-            background: rgba(0, 240, 255, 0.1);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            color: var(--neon-cyan);
-        }
-        .instagram-node .status-tag {
-            background: rgba(255, 0, 85, 0.1);
-            border: 1px solid rgba(255, 0, 85, 0.3);
-            color: var(--neon-magenta);
-        }
-        .primary-node .status-tag {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(252, 238, 10, 0.5);
-            color: var(--neon-yellow);
-        }
-        .primary-node:hover .status-tag {
-            border-color: #000;
+            background: var(--accent-gold);
             color: #000;
         }
     </style>
@@ -248,35 +148,21 @@
 
     <div class="hub-container">
         <div class="profile-avatar-wrapper">
+            <!-- FIXED: points to your profile.jpeg.jpeg file extension -->
             <img src="profile.jpeg.jpeg" alt="Sandeep K Nayak" class="profile-avatar">
         </div>
 
         <div class="identity-block">
             <h1>Sandeep K Nayak</h1>
-            <p>// IDENTITY_SYSTEM</p>
+            <p>System Routing Map</p>
         </div>
 
         <div class="links-vector">
-            <!-- Instagram Link handles both App deep link redirect and web backup securely -->
-            <a href="instagram://user?username=sandeep.k.n77" onclick="window.open('https://instagram.com/sandeep.k.n77', '_blank');" class="hyper-link-node instagram-node">
-                <span>[01] Instagram</span>
-                <span class="status-tag">ONLINE</span>
-            </a>
-            
-            <a href="https://linkedin.com/" target="_blank" class="hyper-link-node">
-                <span>[02] LinkedIn</span>
-                <span class="status-tag">CONNECT</span>
-            </a>
-            
-            <a href="https://github.com/sandykn78-create" target="_blank" class="hyper-link-node">
-                <span>[03] GitHub Core</span>
-                <span class="status-tag">REPOS</span>
-            </a>
-            
-            <a href="index.html" class="hyper-link-node primary-node">
-                <span>↺ RETURN TO TOKEN</span>
-                <span class="status-tag">SYS.EXEC</span>
-            </a>
+            <!-- Added your active Instagram configuration link -->
+            <a href="https://instagram.com/sandeep.k.n77" target="_blank" class="hyper-link-node">Instagram Portal</a>
+            <a href="https://linkedin.com/" target="_blank" class="hyper-link-node">LinkedIn Gateway</a>
+            <a href="https://github.com/sandykn78-create" target="_blank" class="hyper-link-node">GitHub Environment</a>
+            <a href="index.html" class="hyper-link-node primary-node">↺ Return to Identity Token</a>
         </div>
     </div>
 
