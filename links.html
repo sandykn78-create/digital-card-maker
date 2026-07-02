@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sandeep K Nayak — Nexus Terminal</title>
+    <title>Sandeep K Nayak — Nexus Directory</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --neon-cyan: #00f0ff;
             --neon-magenta: #ff0055;
             --neon-yellow: #fcee0a;
-            --terminal-dark: #050811;
-            --panel-bg: rgba(7, 13, 26, 0.85);
+            --terminal-dark: #03070d;
+            --panel-bg: rgba(5, 11, 22, 0.85);
             --cyber-border: rgba(0, 240, 255, 0.25);
         }
 
@@ -35,116 +35,96 @@
             align-items: center;
             padding: 24px;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
-        /* ANIMATED FEATURE 1: Moving Neon Matrix Grid Background */
+        /* Animated Scanline Background Grid */
         body::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 200%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: 
-                linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
-            background-size: 30px 30px;
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(255, 0, 85, 0.01) 2px, transparent 2px);
+            background-size: 25px 25px, 25px 25px, 100% 4px;
             opacity: 0.8;
             pointer-events: none;
             z-index: 1;
-            animation: gridScroll 16s linear infinite;
         }
 
-        @keyframes gridScroll {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-50%); }
-        }
-
-        /* ANIMATED FEATURE 2: CRT Scanline Noise Overlay */
+        /* Global Scanline Overlay Effect */
         body::after {
             content: " ";
             display: block;
             position: absolute;
             top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
             z-index: 99;
-            background-size: 100% 4px;
+            background-size: 100% 3px, 6px 100%;
             pointer-events: none;
-            animation: flicker 0.15s infinite;
         }
 
-        @keyframes flicker {
-            0% { opacity: 0.98; }
-            50% { opacity: 1; }
-            100% { opacity: 0.99; }
-        }
-
-        /* ANIMATED FEATURE 3: System Boot-up Glitch Intro */
         .hub-container {
             width: 100%;
             max-width: 380px;
             background: var(--panel-bg);
             border: 2px solid var(--neon-cyan);
-            border-radius: 2px;
-            padding: 40px 24px 24px;
+            border-radius: 4px; /* Hard, geometric cyberpunk cuts */
+            padding: 40px 24px;
             text-align: center;
-            box-shadow: 0 0 35px rgba(0, 240, 255, 0.1), inset 0 0 20px rgba(0, 240, 255, 0.05);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.15), inset 0 0 20px rgba(0, 240, 255, 0.1);
             position: relative;
             z-index: 2;
-            backdrop-filter: blur(12px);
-            animation: terminalBoot 0.6s cubic-bezier(0.15, 0.85, 0.3, 1) both;
+            backdrop-filter: blur(8px);
         }
 
-        @keyframes terminalBoot {
-            0% { transform: scaleY(0.005) scaleX(0); opacity: 0; filter: brightness(3); }
-            50% { transform: scaleY(0.005) scaleX(1); opacity: 1; filter: brightness(2); }
-            100% { transform: scaleY(1) scaleX(1); opacity: 1; filter: brightness(1); }
-        }
-
+        /* Tech corner accents */
         .hub-container::before {
-            content: 'SYS_NEXUS // ONLINE';
+            content: 'NEXUS_v4.26';
             position: absolute;
-            top: -11px;
-            left: 16px;
+            top: -12px;
+            left: 20px;
             background: var(--terminal-dark);
             padding: 0 8px;
-            font-size: 11px;
+            font-size: 10px;
             color: var(--neon-yellow);
             letter-spacing: 2px;
             border-left: 2px solid var(--neon-yellow);
         }
 
-        /* Profile frame with animated scanner overlay */
         .profile-avatar-wrapper {
             width: 110px;
             height: 110px;
             margin: 0 auto 24px;
             position: relative;
-            background: #020408;
+            background: var(--terminal-dark);
             border: 1px solid var(--neon-magenta);
             padding: 4px;
-            overflow: hidden;
         }
 
-        /* ANIMATED FEATURE 4: Laser Scanline moving down the profile picture */
+        /* Corner bracket accents for the photo frame */
+        .profile-avatar-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -4px; left: -4px; width: 16px; height: 16px;
+            border-top: 3px solid var(--neon-cyan);
+            border-left: 3px solid var(--neon-cyan);
+        }
         .profile-avatar-wrapper::after {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 3px;
-            background: var(--neon-cyan);
-            box-shadow: 0 0 10px var(--neon-cyan);
-            animation: laserScan 3s linear infinite;
-        }
-
-        @keyframes laserScan {
-            0% { top: 0%; }
-            50% { top: 100%; }
-            100% { top: 0%; }
+            bottom: -4px; right: -4px; width: 16px; height: 16px;
+            border-bottom: 3px solid var(--neon-cyan);
+            border-right: 3px solid var(--neon-cyan);
         }
 
         .profile-avatar {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: saturate(1.2) contrast(1.15) brightness(0.95);
+            filter: saturate(1.4) contrast(1.1) hue-rotate(-10deg);
+            border: 1px solid rgba(0, 240, 255, 0.3);
         }
 
         .identity-block h1 {
@@ -154,7 +134,7 @@
             letter-spacing: 1px;
             color: #fff;
             text-transform: uppercase;
-            text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         .identity-block p {
@@ -163,24 +143,24 @@
             text-transform: uppercase;
             letter-spacing: 4px;
             margin-top: 4px;
-            margin-bottom: 32px;
+            margin-bottom: 36px;
+            text-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
         }
 
         .links-vector {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
         }
 
-        /* UI/UX IMPROVEMENT: Cyberpunk Interactive Nodes */
         .hyper-link-node {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 16px 20px;
+            padding: 18px 20px;
             background: rgba(0, 240, 255, 0.02);
             border: 1px solid var(--cyber-border);
-            color: #94a3b8;
+            color: #c4d1ec;
             font-size: 13px;
             font-weight: bold;
             text-decoration: none;
@@ -188,9 +168,10 @@
             text-transform: uppercase;
             position: relative;
             transition: all 0.2s ease;
-            cursor: pointer;
+            overflow: hidden;
         }
 
+        /* Diagonal geometric corner slice cut */
         .hyper-link-node::before {
             content: '';
             position: absolute;
@@ -199,17 +180,19 @@
             border-style: solid;
             border-width: 0 0 8px 8px;
             border-color: transparent transparent var(--neon-cyan) transparent;
+            transition: all 0.2s ease;
         }
 
-        /* ANIMATED FEATURE 5: Micro-Glitch Tilt Effect on Hover */
         .hyper-link-node:hover {
-            background: rgba(0, 240, 255, 0.08);
+            background: rgba(0, 240, 255, 0.1);
             border-color: var(--neon-cyan);
             color: #fff;
-            transform: translateX(4px);
-            box-shadow: -4px 0 0 var(--neon-cyan), 0 0 15px rgba(0, 240, 255, 0.2);
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            text-shadow: 0 0 5px #fff;
         }
 
+        /* Custom color accent variants for distinct portals */
         .hyper-link-node.instagram-node {
             border-color: rgba(255, 0, 85, 0.3);
         }
@@ -217,16 +200,16 @@
             border-color: transparent transparent var(--neon-magenta) transparent;
         }
         .hyper-link-node.instagram-node:hover {
-            background: rgba(255, 0, 85, 0.08);
+            background: rgba(255, 0, 85, 0.1);
             border-color: var(--neon-magenta);
-            box-shadow: -4px 0 0 var(--neon-magenta), 0 0 15px rgba(255, 0, 85, 0.25);
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.4);
         }
 
         .hyper-link-node.primary-node {
-            background: rgba(252, 238, 10, 0.02);
-            border-color: rgba(252, 238, 10, 0.25);
+            background: rgba(252, 238, 10, 0.03);
+            border-color: rgba(252, 238, 10, 0.3);
             color: var(--neon-yellow);
-            margin-top: 8px;
+            margin-top: 10px;
         }
         .hyper-link-node.primary-node::before {
             border-color: transparent transparent var(--neon-yellow) transparent;
@@ -234,61 +217,30 @@
         .hyper-link-node.primary-node:hover {
             background: var(--neon-yellow);
             color: #000;
-            box-shadow: 0 0 20px rgba(252, 238, 10, 0.4);
+            box-shadow: 0 0 20px rgba(252, 238, 10, 0.5);
+            text-shadow: none;
         }
 
         .status-tag {
             font-size: 9px;
             padding: 2px 6px;
-            background: rgba(0, 240, 255, 0.08);
-            border: 1px solid rgba(0, 240, 255, 0.2);
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.3);
             color: var(--neon-cyan);
-            transition: all 0.2s;
         }
         .instagram-node .status-tag {
+            background: rgba(255, 0, 85, 0.1);
+            border: 1px solid rgba(255, 0, 85, 0.3);
             color: var(--neon-magenta);
-            border-color: rgba(255, 0, 85, 0.2);
         }
         .primary-node .status-tag {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(252, 238, 10, 0.5);
             color: var(--neon-yellow);
-            border-color: rgba(252, 238, 10, 0.2);
-        }
-        .hyper-link-node:hover .status-tag {
-            background: #fff;
-            color: #000;
-            border-color: #fff;
         }
         .primary-node:hover .status-tag {
-            background: #000;
-            color: var(--neon-yellow);
             border-color: #000;
-        }
-
-        /* ANIMATED FEATURE 6: Typing Diagnostic Status Ticker at Bottom */
-        .system-ticker {
-            margin-top: 28px;
-            font-size: 10px;
-            color: #4b5d78;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            border-top: 1px dashed rgba(255, 255, 255, 0.05);
-            padding-top: 16px;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .ticker-dot {
-            width: 5px;
-            height: 5px;
-            background-color: var(--neon-cyan);
-            border-radius: 50%;
-            display: inline-block;
-            animation: pulse 1s infinite alternate;
-        }
-        @keyframes pulse {
-            0% { opacity: 0.3; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 8px var(--neon-cyan); }
+            color: #000;
         }
     </style>
 </head>
@@ -301,36 +253,30 @@
 
         <div class="identity-block">
             <h1>Sandeep K Nayak</h1>
-            <p>// NODE_ROUTING_ONLINE</p>
+            <p>// IDENTITY_SYSTEM</p>
         </div>
 
         <div class="links-vector">
-            <!-- Fixed App-Launch and Direct Browser Fallback Logic Combo -->
+            <!-- Instagram Link handles both App deep link redirect and web backup securely -->
             <a href="instagram://user?username=sandeep.k.n77" onclick="window.open('https://instagram.com/sandeep.k.n77', '_blank');" class="hyper-link-node instagram-node">
-                <span>[01] Instagram Portal</span>
-                <span class="status-tag">LAUNCH</span>
+                <span>[01] Instagram</span>
+                <span class="status-tag">ONLINE</span>
             </a>
             
             <a href="https://linkedin.com/" target="_blank" class="hyper-link-node">
-                <span>[02] LinkedIn Database</span>
-                <span class="status-tag">SECURE</span>
+                <span>[02] LinkedIn</span>
+                <span class="status-tag">CONNECT</span>
             </a>
             
             <a href="https://github.com/sandykn78-create" target="_blank" class="hyper-link-node">
-                <span>[03] GitHub Repositories</span>
-                <span class="status-tag">CORE</span>
+                <span>[03] GitHub Core</span>
+                <span class="status-tag">REPOS</span>
             </a>
             
             <a href="index.html" class="hyper-link-node primary-node">
-                <span>↺ RESTORE IDENTITY TOKEN</span>
-                <span class="status-tag">BACK</span>
+                <span>↺ RETURN TO TOKEN</span>
+                <span class="status-tag">SYS.EXEC</span>
             </a>
-        </div>
-
-        <!-- System Status Line Footer -->
-        <div class="system-ticker">
-            <span class="ticker-dot"></span>
-            <span>SECURE_LINK: ALL COMPONENT STREAMS FULLY OPERATIONAL</span>
         </div>
     </div>
 
